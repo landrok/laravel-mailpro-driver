@@ -18,7 +18,11 @@ Before using this library, you MUST have :
 composer require landrok/laravel-mailpro-driver
 ```
 
-## Configure
+## Configuration
+
+First, you must publish the configuration file and then configure your
+API parameters in the .env file.
+
 
 ### Publish configuration
 
@@ -26,9 +30,15 @@ composer require landrok/laravel-mailpro-driver
 php artisan vendor:publish --tag=mailproconfig
 ```
 
-It copies `mailpro.php` to your `config/` folder.
+It creates a `mailpro.php` file  in your `config/` folder.
 
 ### Environment parameters
+
+Change default mail driver config in `.env`:
+
+```sh
+MAIL_DRIVER=mailpro
+```
 
 Add your parameters to you `.env`:
 
@@ -38,5 +48,10 @@ MAILPRO_API_KEY=myApiKey
 MAILPRO_EMAIL_ID=654321
 ```
 
+
 ## Usage
+
+There is nothing much to do. Now, all classes that extends a
+`Mailable` (`Illuminate\Mail\Mailable`) will use this driver.
+
 
