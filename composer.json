@@ -1,7 +1,7 @@
 {
     "name": "landrok/laravel-mailpro-driver",
     "type": "library",
-    "version": "1.0.0-dev",
+    "version": "1.0.0",
     "description": "Mailpro Maxony transport for Laravel",
     "keywords": ["mailpro", "maxony", "driver"],
     "homepage": "https://github.com/landrok/laravel-mailpro-driver",
@@ -21,6 +21,5 @@
                 "Landrok\\Mailpro\\MailproServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
