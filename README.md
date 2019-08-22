@@ -40,7 +40,7 @@ Change default mail driver config in `.env`:
 MAIL_DRIVER=mailpro
 ```
 
-Add your parameters to you `.env`:
+Add your parameters to your `.env`:
 
 ```sh
 MAILPRO_CLIENT_ID=123456
@@ -51,7 +51,7 @@ MAILPRO_EMAIL_ID=654321
 
 ## Usage
 
-There is nothing much to do. Now, all classes that extends a
+There is nothing more to do. Now, all classes that extends a
 `Mailable` (`Illuminate\Mail\Mailable`) will use this driver.
 
 
