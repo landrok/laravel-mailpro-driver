@@ -6,7 +6,7 @@ use Illuminate\Mail\TransportManager;
 
 class MailproAddedTransportManager extends TransportManager
 {
-	protected function createMailjetDriver()
+	protected function createMailproDriver()
     {
         return new MailproTransport;
     }

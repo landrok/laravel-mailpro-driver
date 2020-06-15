@@ -3,29 +3,33 @@
 namespace Landrok\Mailpro\Transport;
 
 use Illuminate\Mail\Transport\Transport;
+use Landrok\Mailpro\Client;
 use Swift_Mime_SimpleMessage;
 
 class MailproTransport extends Transport
 {
-
-	protected $publicKey;
-	protected $secretKey;
+	protected $apiKey;
+	protected $clientId;
+    protected $emailId;
 
 	public function __construct() 
 	{
-		$this->publicKey = config('mailpro.public_key');
-		$this->secretKey = config('mailpro.secret_key');
+		$this->apiKey = config('mailpro.api_key');
+		$this->clientId = config('mailpro.client_id');
+        $this->emailId = config('mailpro.email_id');
 	}
 
 	public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
     {
-    	
         $this->beforeSendPerformed($message);
 
-        $mj = new \Mailpro\Client($this->publicKey, $this->secretKey,
-	              true,['version' => 'v3.1']);
-		
-		$response = $mj->post(\Mailpro\Resources::$Email, ['body' => $this->getBody($message)]);
+        $client = new Client(
+            $this->apiKey,
+            $this->clientId,
+            $this->emailId
+        );
+
+		$response = $client->post(['body' => $this->getBody($message)]);
 
         $this->sendPerformed($message);
 
@@ -38,9 +42,13 @@ class MailproTransport extends Transport
      * @param  \Swift_Mime_SimpleMessage  $message
      * @return array
      */
-
     protected function getBody(Swift_Mime_SimpleMessage $message) 
     {
+        $optionals = [];
+        if ($message->getReplyTo()) {
+            $optionals['ReplyTo'] = key($message->getReplyTo());
+        }
+
     	return [
 		    'Messages' => [
 		        [
@@ -51,7 +59,8 @@ class MailproTransport extends Transport
 		            'To' => $this->getTo($message),
 		            'Subject' => $message->getSubject(),
 		            'HTMLPart' => $message->getBody(),
-		        ]
+		        ] 
+                + $optionals
 		    ]
 		];
     }

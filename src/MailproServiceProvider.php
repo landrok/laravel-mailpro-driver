@@ -7,14 +7,15 @@ use Landrok\Mailpro\Transport\MailproAddedTransportManager;
 use Illuminate\Mail\MailServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
-class MailproServiceProvider.php extends MailServiceProvider
+class MailproServiceProvider extends MailServiceProvider
 {
 
 	public function boot()
     {
         $this->publishes([
-            __DIR__.'/config/mailpro.php' => config_path('mailpro.php')
-        ], 'mailproconfig');
+                __DIR__ . '/config/mailpro.php' => config_path('mailpro.php')
+            ], 'mailproconfig'
+        );
     }
 
 	protected function registerSwiftTransport()
