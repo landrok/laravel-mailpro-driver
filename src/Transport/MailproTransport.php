@@ -44,6 +44,11 @@ class MailproTransport extends Transport
      */
     protected function getBody(Swift_Mime_SimpleMessage $message) 
     {
+        $optionals = [];
+        if ($message->getReplyTo()) {
+            $optionals['ReplyTo'] = key($message->getReplyTo());
+        }
+
     	return [
 		    'Messages' => [
 		        [
@@ -54,7 +59,8 @@ class MailproTransport extends Transport
 		            'To' => $this->getTo($message),
 		            'Subject' => $message->getSubject(),
 		            'HTMLPart' => $message->getBody(),
-		        ]
+		        ] 
+                + $optionals
 		    ]
 		];
     }

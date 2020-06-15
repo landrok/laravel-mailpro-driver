@@ -37,6 +37,12 @@ class Client
             $recipients[] = $recipient['Email'];
         }
 
+        // Optional
+        $optionals = [];
+        if (isset($body['body']['Messages'][0]['ReplyTo'])) {
+            $optionals['ReplyTo'] = $body['body']['Messages'][0]['ReplyTo'];
+        }
+
         try {
 
             $response = $client->post(
@@ -48,7 +54,7 @@ class Client
                         'Subject'    => $data['Subject'],
                         'BodyHTML'   => $data['HTMLPart'],
                         'EmailData'  => implode(',', $recipients),
-                    ]
+                    ] + $optionals
             ]);
             
         } catch (ClientException $e) {
